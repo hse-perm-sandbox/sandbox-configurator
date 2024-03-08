@@ -1,0 +1,7 @@
+---
+
+- hosts: edu_practice
+  become: true
+  roles:
+    - python_packages
+    - sql_server

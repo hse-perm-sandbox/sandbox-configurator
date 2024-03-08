@@ -1,0 +1,13 @@
+---
+
+- name: Pip install requests
+  become: true
+  pip:
+    name: requests
+    state: present
+
+- name: Pip install pymssql
+  become: true
+  pip:
+    name: pymssql
+    state: present

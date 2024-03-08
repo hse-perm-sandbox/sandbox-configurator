@@ -1,0 +1,7 @@
+---
+
+- name: Run SqlServer in docker
+  include_tasks: tasks/run_in_docker.yml
+
+- name: Add db for vaccine-app
+  include_tasks: tasks/vaccine_app_db.yml

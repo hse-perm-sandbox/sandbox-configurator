@@ -1,0 +1,21 @@
+---
+
+- name: Pull SqlServer docker image
+  community.docker.docker_image:
+    name: "{{ sql_server_docker_image }}"
+    source: pull
+
+- name: Create SqlServer docker container
+  community.docker.docker_container:
+    name: "{{ sql_server_docker_container_name }}"
+    image: "{{ sql_server_docker_image }}"
+    user: "root"
+    ports: "{{ sql_server_docker_port }}:1433"
+    volumes:
+      - "{{ sql_server_docker_volume_name }}:/var/opt/mssql/data"
+    env:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
+      MSSQL_SA_PASSWORD: "{{ sql_server_sa_password }}"
+    restart_policy: "always"
+    state: started

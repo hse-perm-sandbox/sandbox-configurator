@@ -5,3 +5,4 @@
   roles:
     - python_packages
     - sql_server
+    - pg_server

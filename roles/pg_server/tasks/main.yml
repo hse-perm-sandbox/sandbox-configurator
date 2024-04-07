@@ -1,4 +1,4 @@
 ---
 
-- name: Run SqlServer in docker
+- name: Run PostgreSql server in docker
   include_tasks: tasks/run_in_docker.yml

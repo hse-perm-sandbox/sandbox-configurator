@@ -1,10 +1,5 @@
 ---
 
-- name: Pull SqlServer docker image
-  community.docker.docker_image:
-    name: "{{ sql_server_docker_image }}"
-    source: pull
-
 - name: Create SqlServer docker container
   community.docker.docker_container:
     name: "{{ sql_server_docker_container_name }}"
@@ -18,4 +13,10 @@
       MSSQL_PID: "Developer"
       MSSQL_SA_PASSWORD: "{{ sql_server_sa_password }}"
     restart_policy: "always"
-    state: started
+    state: absent
+
+- name: Pull SqlServer docker image
+  community.docker.docker_image:
+    name: "{{ sql_server_docker_image }}"
+    source: pull
+    state: absent

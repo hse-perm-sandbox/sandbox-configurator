@@ -4,5 +4,4 @@
   become: true
   roles:
     - python_packages
-    - sql_server
     - pg_server

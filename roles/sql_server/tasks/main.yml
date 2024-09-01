@@ -1,4 +1,0 @@
----
-
-- name: Run SqlServer in docker
-  include_tasks: tasks/run_in_docker.yml

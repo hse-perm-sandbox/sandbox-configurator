@@ -10,4 +10,10 @@
   become: true
   pip:
     name: pymssql
+    state: absent
+
+- name: Pip install psycopg2
+  become: true
+  pip:
+    name: psycopg2
     state: present

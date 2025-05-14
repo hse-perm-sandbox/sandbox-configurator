@@ -1,0 +1,28 @@
+---
+
+- name: Stop PostgreSQL service
+  become: true
+  service:
+    name: postgresql
+    state: stopped
+
+- name: Remove PostgreSQL packages
+  become: true
+  apt:
+    name:
+      - postgresql
+      - postgresql-contrib
+    state: absent
+    purge: yes
+
+- name: Remove PostgreSQL configuration files
+  become: true
+  file:
+    path: /etc/postgresql
+    state: absent
+
+- name: Remove PostgreSQL data directory
+  become: true
+  file:
+    path: /var/lib/postgresql
+    state: absent

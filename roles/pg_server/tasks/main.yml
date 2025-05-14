@@ -1,7 +1,4 @@
 ---
 
-- name: Run PostgreSql server in docker
-  include_tasks: tasks/run_in_docker.yml
-
-- name: Crate db and user for SAWalk_app
-  include_tasks: tasks/sawalk_app_db.yml
+- name: Install PostgreSql server
+  include_tasks: tasks/uninstall_postgres.yml

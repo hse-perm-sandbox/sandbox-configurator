@@ -4,3 +4,4 @@
   become: true
   roles:
     - python_packages
+    - pg_server

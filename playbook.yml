@@ -1,7 +1,6 @@
 ---
 
-- hosts: edu_practice
+- hosts: edu_practice_pg_server
   become: true
   roles:
     - python_packages
-    - pg_server

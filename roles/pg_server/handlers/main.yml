@@ -1,2 +1,6 @@
 ---
-# handlers file for pg_server
+- name: restart postgresql
+  become: yes
+  ansible.builtin.service:
+    name: postgresql
+    state: restarted

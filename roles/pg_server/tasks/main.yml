@@ -1,4 +1,4 @@
 ---
 
 - name: Install PostgreSql server
-  include_tasks: tasks/uninstall_postgres.yml
+  include_tasks: tasks/install_postgres.yml

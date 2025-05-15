@@ -14,6 +14,16 @@
   apt:
     name: python3-venv
     state: present
+    update_cache: yes
+
+- name: Install PostgreSQL Python dependencies
+  become: true
+  apt:
+    name:
+      - python3-psycopg2
+      - libpq-dev
+    state: present
+    update_cache: yes
 
 - name: Create a virtual environment
   become: true
@@ -22,7 +32,4 @@
 - name: Install requests in virtual environment
   become: true
   command: /opt/venv/bin/pip install requests
-
-- name: Install psycopg2-binary in virtual environment
-  become: true
-  command: /opt/venv/bin/pip install psycopg2-binary
+  

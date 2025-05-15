@@ -1,0 +1,14 @@
+# Настройки подключения
+listen_addresses = '{{ postgresql_listen_addresses }}'
+port = {{ postgresql_port }}
+
+# Ресурсы
+shared_buffers = 128MB
+work_mem = 4MB
+
+# Каталог данных
+data_directory = '{{ postgresql_data_dir }}'
+
+# Логирование
+log_line_prefix = '%t [%p]: [%l-1] '
+log_timezone = 'UTC'

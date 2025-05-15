@@ -1,28 +1,63 @@
----
-
-- name: Stop PostgreSQL service
+- name: Полное удаление PostgreSQL
   become: true
-  service:
-    name: postgresql
-    state: stopped
+  block:
+    # Остановка службы
+    - name: Остановка PostgreSQL
+      ansible.builtin.service:
+        name: postgresql
+        state: stopped
+      ignore_errors: true
 
-- name: Remove PostgreSQL packages
-  become: true
-  apt:
-    name:
-      - postgresql
-      - postgresql-contrib
-    state: absent
-    purge: yes
+    # Удаление пакетов
+    - name: Удаление всех пакетов PostgreSQL
+      ansible.builtin.apt:
+        name: "{{ item }}"
+        state: absent
+        purge: yes  # Удаляет конфигурационные файлы
+      loop:
+        - postgresql*
+        - postgresql-*
+        - postgresql-client*
+        - postgresql-client-*
+        - postgresql-common
+        - postgresql-contrib
+        - pgdg-keyring
 
-- name: Remove PostgreSQL configuration files
-  become: true
-  file:
-    path: /etc/postgresql
-    state: absent
+    # Удаление оставшихся файлов
+    - name: Удаление конфигурационных файлов
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /etc/postgresql/
+        - /etc/postgresql-common/
+        - /var/lib/postgresql/
+        - /var/log/postgresql/
+        - /var/run/postgresql/
+        - /usr/lib/postgresql/
+        - /usr/share/postgresql/
+        - /usr/share/postgresql-common/
 
-- name: Remove PostgreSQL data directory
-  become: true
-  file:
-    path: /var/lib/postgresql
-    state: absent
+    # Удаление пользователей и групп
+    - name: Удаление пользователя postgres
+      ansible.builtin.user:
+        name: postgres
+        state: absent
+        remove: yes
+      ignore_errors: true
+
+    - name: Удаление группы postgres
+      ansible.builtin.group:
+        name: postgres
+        state: absent
+      ignore_errors: true
+
+    # Очистка зависимостей
+    - name: Автоудаление неиспользуемых зависимостей
+      ansible.builtin.apt:
+        autoremove: yes
+        autoclean: yes
+
+    - name: Обновление кэша пакетов
+      ansible.builtin.apt:
+        update_cache: yes

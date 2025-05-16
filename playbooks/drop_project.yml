@@ -16,7 +16,13 @@
 
     - name: Archive config file
       ansible.builtin.copy:
-        src: "inventories/pg_projects/{{ project_name }}.yml"
-        dest: "inventories/archive/{{ project_name }}_{{ ansible_date_time.date }}.yml"
+        src: "../inventories/pg_projects/{{ project_name }}.yml"
+        dest: "../inventories/archive/{{ project_name }}_{{ ansible_date_time.date }}.yml"
         remote_src: no
+      delegate_to: localhost
+
+    - name: Remove original config file
+      ansible.builtin.file:
+        path: "../inventories/pg_projects/{{ project_name }}.yml"
+        state: absent
       delegate_to: localhost

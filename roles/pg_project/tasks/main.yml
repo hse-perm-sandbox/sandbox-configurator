@@ -1,0 +1,21 @@
+---
+- name: "{{ action }} PostgreSQL user"
+  community.postgresql.postgresql_user:
+    name: "{{ pg_user }}"
+    password: "{{ pg_password }}"
+    state: "{{ 'present' if action == 'create' else 'absent' }}"
+    role_attr_flags: "CREATEDB"
+    login_host: "127.0.0.1"
+    login_user: postgres
+    login_password: "{{ postgres_admin_pass | default(omit) }}"
+  tags: user
+
+- name: "{{ action }} project database"
+  community.postgresql.postgresql_db:
+    name: "{{ pg_db }}"
+    owner: "{{ pg_user if action == 'create' else omit }}"
+    state: "{{ 'present' if action == 'create' else 'absent' }}"
+    login_host: "127.0.0.1"
+    login_user: postgres
+    login_password: "{{ postgres_admin_pass | default(omit) }}"
+  tags: db

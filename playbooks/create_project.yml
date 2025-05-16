@@ -1,0 +1,15 @@
+---
+- hosts: edu_practice_pg_server
+  vars_files:
+    - "../inventories/pg_projects/{{ project_name }}.yml"
+    - "../roles/pg_server/vars/main.yml"
+  tasks:
+    - name: Create temp project
+      include_role:
+        name: pg_project
+      vars:
+        action: create
+        pg_user: "{{ user }}"
+        pg_db: "{{ db }}"
+        pg_password: "{{ password }}"
+        postgres_admin_pass: "{{ pg_server_sa_password }}"
